@@ -1,5 +1,6 @@
 import { Link, usePage } from '@inertiajs/react';
-import { Calendar, Home, Users } from 'lucide-react';
+import { Calendar, Home, LogOut, Users } from 'lucide-react';
+import { logout } from '@/routes';
 import type { SharedData } from '@/types';
 
 type AdminNavKey = 'dashboard' | 'clients' | 'appointments';
@@ -84,13 +85,21 @@ export default function AdminSidebar({ active }: AdminSidebarProps) {
                 })}
             </div>
 
-            <div className="mt-auto pt-6">
+            <div className="mt-auto space-y-2 pt-6">
                 <Link
                     href="/"
                     className="flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-medium text-slate-600 transition hover:bg-purple-100/70 hover:text-purple-700"
                 >
                     <Home className="h-4 w-4" />
                     Back to Website
+                </Link>
+                <Link
+                    href={logout()}
+                    as="button"
+                    className="flex w-full items-center gap-3 rounded-2xl px-4 py-3 text-sm font-medium text-slate-600 transition hover:bg-red-50 hover:text-red-600"
+                >
+                    <LogOut className="h-4 w-4" />
+                    Logout
                 </Link>
             </div>
         </aside>
