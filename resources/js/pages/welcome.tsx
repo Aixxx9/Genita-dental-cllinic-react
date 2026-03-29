@@ -16,6 +16,7 @@ import {
     Stethoscope,
     Sun,
     Syringe,
+    X,
     User,
 } from 'lucide-react';
 
@@ -27,7 +28,8 @@ const services = [
     },
     {
         title: 'Teeth Cleaning',
-        description: 'Professional cleaning to remove plaque and tartar buildup',
+        description:
+            'Professional cleaning to remove plaque and tartar buildup',
         icon: <Sparkles className="h-6 w-6" />,
     },
     {
@@ -37,7 +39,8 @@ const services = [
     },
     {
         title: 'Dental Filling',
-        description: 'Restore damaged teeth with durable, natural-looking fillings',
+        description:
+            'Restore damaged teeth with durable, natural-looking fillings',
         icon: <CircleDot className="h-6 w-6" />,
     },
     {
@@ -90,6 +93,7 @@ const timeOptions = buildTimeOptions();
 
 const Welcome = ({ bookedSlots }: WelcomeProps) => {
     const [showSentModal, setShowSentModal] = useState(false);
+    const [showDeveloperModal, setShowDeveloperModal] = useState(false);
     const appointmentForm = useForm({
         full_name: '',
         email: '',
@@ -108,9 +112,9 @@ const Welcome = ({ bookedSlots }: WelcomeProps) => {
         return new Set(
             bookedSlots
                 .filter(
-                    (slot) => slot.date === appointmentForm.data.preferred_date
+                    (slot) => slot.date === appointmentForm.data.preferred_date,
                 )
-                .map((slot) => slot.time)
+                .map((slot) => slot.time),
         );
     }, [appointmentForm.data.preferred_date, bookedSlots]);
 
@@ -128,7 +132,9 @@ const Welcome = ({ bookedSlots }: WelcomeProps) => {
         if (target) {
             const headerOffset = 96;
             const targetTop =
-                target.getBoundingClientRect().top + window.scrollY - headerOffset;
+                target.getBoundingClientRect().top +
+                window.scrollY -
+                headerOffset;
 
             window.scrollTo({
                 top: targetTop,
@@ -153,7 +159,7 @@ const Welcome = ({ bookedSlots }: WelcomeProps) => {
                             <p className="text-lg font-semibold text-slate-900">
                                 GENITA
                             </p>
-                            <p className="text-xs uppercase tracking-[0.2em] text-slate-500">
+                            <p className="text-xs tracking-[0.2em] text-slate-500 uppercase">
                                 Dental Clinic
                             </p>
                         </div>
@@ -180,6 +186,13 @@ const Welcome = ({ bookedSlots }: WelcomeProps) => {
                         >
                             Contact
                         </button>
+                        <button
+                            type="button"
+                            onClick={() => setShowDeveloperModal(true)}
+                            className="hover:text-purple-600"
+                        >
+                            Developer
+                        </button>
                     </nav>
                     <div className="flex items-center gap-4">
                         <div className="hidden items-center gap-2 text-sm text-slate-500 lg:flex">
@@ -197,8 +210,8 @@ const Welcome = ({ bookedSlots }: WelcomeProps) => {
             </header>
 
             <main className="mx-auto w-full max-w-6xl px-6">
-                <section className="relative pb-16 pt-14 text-center md:pt-20">
-                    <div className="absolute left-1/2 top-10 h-36 w-[32rem] -translate-x-1/2 rounded-full bg-purple-200/40 blur-3xl md:h-40" />
+                <section className="relative pt-14 pb-16 text-center md:pt-20">
+                    <div className="absolute top-10 left-1/2 h-36 w-[32rem] -translate-x-1/2 rounded-full bg-purple-200/40 blur-3xl md:h-40" />
                     <div className="relative">
                         <span className="inline-flex items-center gap-2 rounded-full bg-purple-100 px-4 py-2 text-sm font-medium text-purple-600">
                             <span className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-white text-purple-600">
@@ -224,7 +237,9 @@ const Welcome = ({ bookedSlots }: WelcomeProps) => {
                             </button>
                             <button
                                 type="button"
-                                onClick={() => handleScrollToSection('services')}
+                                onClick={() =>
+                                    handleScrollToSection('services')
+                                }
                                 className="rounded-full border border-purple-400 px-6 py-3 text-sm font-semibold text-purple-600 transition hover:border-purple-600 hover:bg-purple-600 hover:text-white"
                             >
                                 Learn More
@@ -286,7 +301,7 @@ const Welcome = ({ bookedSlots }: WelcomeProps) => {
                         <h2 className="text-3xl font-semibold text-slate-900">
                             Book an Appointment
                         </h2>
-                            <p className="mt-2 text-slate-500">
+                        <p className="mt-2 text-slate-500">
                             Schedule your visit with us. Pending and approved
                             time slots are unavailable.
                         </p>
@@ -315,7 +330,7 @@ const Welcome = ({ bookedSlots }: WelcomeProps) => {
                                 onChange={(event) =>
                                     appointmentForm.setData(
                                         'full_name',
-                                        event.target.value
+                                        event.target.value,
                                     )
                                 }
                                 className="mt-3 w-full rounded-2xl border border-purple-200 bg-white px-4 py-3 text-sm text-slate-700 shadow-sm placeholder:text-slate-400 focus:border-purple-400 focus:outline-none"
@@ -333,7 +348,7 @@ const Welcome = ({ bookedSlots }: WelcomeProps) => {
                                 onChange={(event) =>
                                     appointmentForm.setData(
                                         'email',
-                                        event.target.value
+                                        event.target.value,
                                     )
                                 }
                                 className="mt-3 w-full rounded-2xl border border-purple-200 bg-white px-4 py-3 text-sm text-slate-700 shadow-sm placeholder:text-slate-400 focus:border-purple-400 focus:outline-none"
@@ -351,7 +366,7 @@ const Welcome = ({ bookedSlots }: WelcomeProps) => {
                                 onChange={(event) =>
                                     appointmentForm.setData(
                                         'phone',
-                                        event.target.value
+                                        event.target.value,
                                     )
                                 }
                                 className="mt-3 w-full rounded-2xl border border-purple-200 bg-white px-4 py-3 text-sm text-slate-700 shadow-sm placeholder:text-slate-400 focus:border-purple-400 focus:outline-none"
@@ -367,7 +382,7 @@ const Welcome = ({ bookedSlots }: WelcomeProps) => {
                                 onChange={(event) =>
                                     appointmentForm.setData(
                                         'treatment_type',
-                                        event.target.value
+                                        event.target.value,
                                     )
                                 }
                                 className="mt-3 w-full rounded-2xl border border-purple-200 bg-white px-4 py-3 text-sm text-slate-700 shadow-sm focus:border-purple-400 focus:outline-none"
@@ -395,7 +410,7 @@ const Welcome = ({ bookedSlots }: WelcomeProps) => {
                                 onChange={(event) =>
                                     appointmentForm.setData(
                                         'allergies',
-                                        event.target.value
+                                        event.target.value,
                                     )
                                 }
                                 className="mt-3 w-full rounded-2xl border border-purple-200 bg-white px-4 py-3 text-sm text-slate-700 shadow-sm placeholder:text-slate-400 focus:border-purple-400 focus:outline-none"
@@ -413,7 +428,7 @@ const Welcome = ({ bookedSlots }: WelcomeProps) => {
                                 onChange={(event) =>
                                     appointmentForm.setData(
                                         'medical_conditions',
-                                        event.target.value
+                                        event.target.value,
                                     )
                                 }
                                 className="mt-3 w-full rounded-2xl border border-purple-200 bg-white px-4 py-3 text-sm text-slate-700 shadow-sm placeholder:text-slate-400 focus:border-purple-400 focus:outline-none"
@@ -431,7 +446,7 @@ const Welcome = ({ bookedSlots }: WelcomeProps) => {
                                 onChange={(event) =>
                                     appointmentForm.setData(
                                         'maintenance',
-                                        event.target.value
+                                        event.target.value,
                                     )
                                 }
                                 className="mt-3 w-full rounded-2xl border border-purple-200 bg-white px-4 py-3 text-sm text-slate-700 shadow-sm placeholder:text-slate-400 focus:border-purple-400 focus:outline-none"
@@ -450,7 +465,7 @@ const Welcome = ({ bookedSlots }: WelcomeProps) => {
                                     onChange={(event) =>
                                         appointmentForm.setData(
                                             'preferred_date',
-                                            event.target.value
+                                            event.target.value,
                                         )
                                     }
                                     className="w-full rounded-2xl border border-purple-200 bg-white px-4 py-3 pr-11 text-sm text-slate-700 shadow-sm focus:border-purple-400 focus:outline-none"
@@ -459,14 +474,14 @@ const Welcome = ({ bookedSlots }: WelcomeProps) => {
                                     type="button"
                                     onClick={() => {
                                         const input = document.getElementById(
-                                            'preferred-date'
+                                            'preferred-date',
                                         ) as HTMLInputElement & {
                                             showPicker?: () => void;
                                         };
                                         input?.showPicker?.();
                                         input?.focus();
                                     }}
-                                    className="absolute right-3 top-1/2 -translate-y-1/2 rounded-full p-2 text-slate-400 transition hover:bg-purple-50 hover:text-purple-600"
+                                    className="absolute top-1/2 right-3 -translate-y-1/2 rounded-full p-2 text-slate-400 transition hover:bg-purple-50 hover:text-purple-600"
                                 >
                                     <Calendar className="h-4 w-4" />
                                 </button>
@@ -482,7 +497,7 @@ const Welcome = ({ bookedSlots }: WelcomeProps) => {
                                 onChange={(event) =>
                                     appointmentForm.setData(
                                         'preferred_time',
-                                        event.target.value
+                                        event.target.value,
                                     )
                                 }
                                 className="mt-3 w-full rounded-2xl border border-purple-200 bg-white px-4 py-3 text-sm text-slate-700 shadow-sm focus:border-purple-400 focus:outline-none"
@@ -514,7 +529,7 @@ const Welcome = ({ bookedSlots }: WelcomeProps) => {
                                 onChange={(event) =>
                                     appointmentForm.setData(
                                         'notes',
-                                        event.target.value
+                                        event.target.value,
                                     )
                                 }
                                 className="mt-3 w-full rounded-2xl border border-purple-200 bg-white px-4 py-3 text-sm text-slate-700 shadow-sm placeholder:text-slate-400 focus:border-purple-400 focus:outline-none"
@@ -547,7 +562,7 @@ const Welcome = ({ bookedSlots }: WelcomeProps) => {
                                 />
                             </div>
                             <div>
-                                <p className="text-xs uppercase tracking-[0.2em] text-slate-400">
+                                <p className="text-xs tracking-[0.2em] text-slate-400 uppercase">
                                     Owner
                                 </p>
                                 <h3 className="mt-1 text-xl font-semibold text-slate-900">
@@ -585,6 +600,73 @@ const Welcome = ({ bookedSlots }: WelcomeProps) => {
                         <button
                             type="button"
                             onClick={() => setShowSentModal(false)}
+                            className="mt-6 w-full rounded-2xl bg-purple-600 px-4 py-2 text-sm font-semibold text-white shadow-lg shadow-purple-200 transition hover:bg-purple-700"
+                        >
+                            Close
+                        </button>
+                    </div>
+                </div>
+            )}
+
+            {showDeveloperModal && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 px-4">
+                    <div className="w-full max-w-lg rounded-3xl bg-white p-6 shadow-xl">
+                        <div className="flex items-start justify-between gap-4">
+                            <div>
+                                <p className="text-xs tracking-[0.2em] text-slate-400 uppercase">
+                                    Developer
+                                </p>
+                                <h3 className="mt-2 text-2xl font-semibold text-slate-900">
+                                    Website & System Development
+                                </h3>
+                            </div>
+                            <button
+                                type="button"
+                                onClick={() => setShowDeveloperModal(false)}
+                                className="rounded-full p-2 text-slate-400 transition hover:bg-slate-100 hover:text-slate-600"
+                                aria-label="Close developer modal"
+                            >
+                                <X className="h-4 w-4" />
+                            </button>
+                        </div>
+                        <div className="mt-5 flex flex-col gap-5 sm:flex-row sm:items-start">
+                            <img
+                                src="/photo/image.png"
+                                alt="Developer portrait"
+                                className="h-32 w-32 rounded-2xl object-cover shadow-md"
+                            />
+                            <div className="flex-1">
+                                <p className="text-sm leading-7 text-slate-500">
+                                    This clinic website and admin system were
+                                    developed to make appointment handling,
+                                    client records, and clinic operations easier
+                                    to manage.
+                                </p>
+                                <div className="mt-4 space-y-2 text-sm text-slate-600">
+                                    <p>
+                                        <span className="font-semibold text-slate-800">
+                                            Facebook:
+                                        </span>{' '}
+                                        Alampayam Jose Victor
+                                    </p>
+                                    <p>
+                                        <span className="font-semibold text-slate-800">
+                                            Email:
+                                        </span>{' '}
+                                        Alampayanjose@gmail.com
+                                    </p>
+                                    <p>
+                                        <span className="font-semibold text-slate-800">
+                                            Instagram:
+                                        </span>{' '}
+                                        alampayan.jv
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <button
+                            type="button"
+                            onClick={() => setShowDeveloperModal(false)}
                             className="mt-6 w-full rounded-2xl bg-purple-600 px-4 py-2 text-sm font-semibold text-white shadow-lg shadow-purple-200 transition hover:bg-purple-700"
                         >
                             Close
