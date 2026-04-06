@@ -17,6 +17,8 @@ type Props = {
     canRegister: boolean;
 };
 
+const loadingWordmarkLines = ['GENITA DENTAL', 'CLINIC'];
+
 export default function Login({
     status,
     canResetPassword,
@@ -33,6 +35,39 @@ export default function Login({
                         overflow: hidden;
                         height: 100%;
                     }
+
+                    @keyframes wordmark-letter-fade {
+                        0% {
+                            opacity: 0;
+                            transform: translateY(14px) scale(0.96);
+                            filter: blur(5px);
+                        }
+                        100% {
+                            opacity: 1;
+                            transform: translateY(0) scale(1);
+                            filter: blur(0);
+                        }
+                    }
+
+                    @keyframes wordmark-slide-left {
+                        0%, 72% {
+                            transform: translateX(0);
+                            opacity: 1;
+                        }
+                        100% {
+                            transform: translateX(-120px);
+                            opacity: 0;
+                        }
+                    }
+
+                    @keyframes loading-line {
+                        0% {
+                            transform: translateX(-100%);
+                        }
+                        100% {
+                            transform: translateX(220%);
+                        }
+                    }
                 `}</style>
             </Head>
 
@@ -48,6 +83,85 @@ export default function Login({
                 >
                     {({ processing, errors }) => (
                         <>
+                            {processing && (
+                                <div className="fixed inset-0 z-50 flex items-center justify-center overflow-hidden bg-white/95 backdrop-blur-sm">
+                                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(147,51,234,0.18),_transparent_45%),radial-gradient(circle_at_bottom,_rgba(99,102,241,0.18),_transparent_40%)]" />
+
+                                    <div className="relative flex w-full max-w-3xl flex-col items-center gap-8 px-6 text-center">
+                                        <div
+                                            className="flex flex-col items-center gap-3 text-3xl font-semibold uppercase tracking-[0.32em] text-slate-900 sm:text-5xl"
+                                            style={{
+                                                animation:
+                                                    'wordmark-slide-left 3.2s cubic-bezier(0.22, 1, 0.36, 1) forwards',
+                                            }}
+                                        >
+                                            {loadingWordmarkLines.map(
+                                                (line, lineIndex) => {
+                                                    const letterOffset =
+                                                        loadingWordmarkLines
+                                                            .slice(0, lineIndex)
+                                                            .join('').length +
+                                                        lineIndex;
+
+                                                    return (
+                                                        <div
+                                                            key={line}
+                                                            className="flex items-center justify-center"
+                                                        >
+                                                            {line.split('').map(
+                                                                (
+                                                                    letter,
+                                                                    letterIndex,
+                                                                ) =>
+                                                                    letter ===
+                                                                    ' ' ? (
+                                                                        <span
+                                                                            key={`space-${lineIndex}-${letterIndex}`}
+                                                                            className="w-4 sm:w-6"
+                                                                            aria-hidden="true"
+                                                                        />
+                                                                    ) : (
+                                                                        <span
+                                                                            key={`${letter}-${lineIndex}-${letterIndex}`}
+                                                                            className="inline-block opacity-0"
+                                                                            style={{
+                                                                                animation:
+                                                                                    'wordmark-letter-fade 0.45s ease-out forwards',
+                                                                                animationDelay: `${(letterOffset + letterIndex) * 0.08}s`,
+                                                                            }}
+                                                                        >
+                                                                            {letter}
+                                                                        </span>
+                                                                    ),
+                                                            )}
+                                                        </div>
+                                                    );
+                                                },
+                                            )}
+                                        </div>
+
+                                        <div className="space-y-3">
+                                            <p className="text-sm font-medium uppercase tracking-[0.35em] text-purple-700">
+                                                Loading
+                                            </p>
+                                            <p className="text-sm text-gray-500">
+                                                Preparing your dashboard...
+                                            </p>
+                                        </div>
+
+                                        <div className="relative h-1.5 w-full max-w-md overflow-hidden rounded-full bg-purple-100">
+                                            <div
+                                                className="absolute inset-y-0 left-0 w-1/3 rounded-full bg-gradient-to-r from-purple-600 via-indigo-500 to-purple-400"
+                                                style={{
+                                                    animation:
+                                                        'loading-line 1.15s ease-in-out infinite',
+                                                }}
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+
                             {/* Header */}
                             <div className="text-center">
                                 <h1 className="bg-gradient-to-r from-purple-600 to-indigo-500 bg-clip-text text-3xl font-bold text-transparent">
